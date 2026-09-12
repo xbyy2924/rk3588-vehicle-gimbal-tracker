@@ -1,0 +1,19 @@
+[Unit]
+Description=Rockchip RKAIQ 3A Server for GC4653
+After=local-fs.target systemd-udev-trigger.service
+Wants=systemd-udev-trigger.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+ExecStartPre=/bin/sh -c 'n=0; while [ ! -e /dev/video11 ] && [ "$n" -lt 30 ]; do n=$((n + 1)); sleep 1; done; [ -e /dev/video11 ]'
+ExecStartPre=/usr/bin/test -r /etc/iqfiles/gc4653_YT10120_30IRC-4M-F20.json
+ExecStart=/usr/bin/rkaiq_3A_server
+Restart=always
+RestartSec=2
+KillMode=control-group
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
