@@ -1,3 +1,7 @@
+
+
+https://github.com/user-attachments/assets/bfa60f73-d565-4e5e-9dd8-d5f60e244cc4
+
 在RK3588上完成车辆检测和双轴云台跟踪。摄像头图像通过V4L2采集，检测模型运行在RKNPU上，Linux端根据目标位置生成云台角度指令，并通过UDP与STM32G4控制板通信。
 只检测COCO数据集中的车辆类别：
 摄像头：GC4653，1280×720 NV12，30 FPS
@@ -5,7 +9,13 @@
 显示：SDL2
 跟踪：IoU和中心距离关联，卡尔曼滤波预测
 通信：UDP非阻塞socket和poll
-电机控制：STM32G431CBT6双轴FOC
+云台
+
+https://github.com/user-attachments/assets/1ee3c13f-abe4-4fd1-a326-c74fd1417255
+
+控制：STM32G431CBT6双轴FOC
+
+
 
 数据流程：GC4653 → V4L2采集 → RKNN推理 → 目标关联/卡尔曼预测 → 云台控制量 → UDP → STM32G4 → 双轴电机
 
