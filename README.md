@@ -1,7 +1,5 @@
 
 
-https://github.com/user-attachments/assets/bfa60f73-d565-4e5e-9dd8-d5f60e244cc4
-
 在RK3588上完成车辆检测和双轴云台跟踪。摄像头图像通过V4L2采集，检测模型运行在RKNPU上，Linux端根据目标位置生成云台角度指令，并通过UDP与STM32G4控制板通信。
 只检测COCO数据集中的车辆类别：
 摄像头：GC4653，1280×720 NV12，30 FPS
