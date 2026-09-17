@@ -1,24 +1,15 @@
 # RK3588 车辆识别与双轴云台 Linux 客户端
 
-这是一个从历史 GitHub 备份重新整理出的独立、完整 Linux 工程。基线是
-`xiaobangyuanyuan/rk3588-vehicle-gimbal-tracker` 的 `main` 分支提交
-`6acf1b14eb70fa8f423479244fa2d8b93fa0e994`。它保留 V4L2 摄像头、RKNN
-YOLOv8 推理、SDL 实时画面和检测框，并把云台 UDP、任务模式和终端交互统一
-进一个进程。启动后只运行一个可执行文件：`./app`。
 
 ## 已实现
 
 - `/dev/video11` 单平面 NV12 摄像头采集，摄像头、推理、UDP、控制台各自独立线程。
-- RK3588 NPU YOLOv8 推理；显示全部检测框，车辆目标由单目标跟踪器持续跟踪。
-- 修复历史后处理代码中置信度索引错误。
-- 不依赖 RGA 做预处理，避免 `RGA_COLORFILL fail` 刷屏；终端不输出逐帧日志。
-- 保留现有 STM32 UDP 协议，不要求修改 MCU 报文。
+- RK3588 NPU YOLOv8 推理；显示全部检测框，目标由单目标跟踪器持续跟踪。
 - UDP 报文校验：源 IP/端口、长度、magic、版本、消息类型、payload 长度、序列号和 ACK 对应关系。
 - 100 ms 心跳，300 ms 遥测/ACK 超时；统计丢包、乱序、非法包和 ACK 状态。
 - 链路失效或 MCU watchdog 触发时自动退出跟踪/手动模式并进入 HOLD。
 - Linux 端角度范围和跟踪速度可运行时修改；MCU 端不增加角度限制。
 - 模式：HOLD、TRACK、MANUAL；TRACK 可在运行时选择 COCO 80 类目标，退出前发送 DISARM。
-- 模型和标签按 `app` 所在目录解析，不依赖启动时的工作目录。
 - 构建脚本不会删除 `model/` 或已安装的模型。
 
 ## 目录
