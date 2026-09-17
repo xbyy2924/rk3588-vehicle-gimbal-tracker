@@ -1,0 +1,8 @@
+/build/
+/install/
+/build.log
+*.core
+core
+
+# The model is board/project specific and was not present in the history backup.
+/model/*.rknn
